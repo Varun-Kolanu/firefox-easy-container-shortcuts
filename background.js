@@ -17,6 +17,11 @@ function onContainerCommand(command) {
     return;
   }
 
+  if (command === 'ecs-new-tab-current-container-current-group') {
+    openTabInCurrentContainerCurrentGroup();
+    return;
+  }
+
   const newTabMatches = command.match(/^ecs-new-tab-container-(\d)$/);
   if (newTabMatches && newTabMatches.length == 2) {
     openContainerTab(parseInt(newTabMatches[1]) - 1);
@@ -63,6 +68,23 @@ async function openTabInCurrentContainer() {
     }
     let currentTab = results[0];
     browser.tabs.create({cookieStoreId: currentTab.cookieStoreId});
+  });
+}
+
+async function openTabInCurrentContainerCurrentGroup() {
+  browser.tabs.query({currentWindow:true, active:true}).then(function(results) {
+    if (!results || results.length < 1) {
+      return; // do nothing
+    }
+    let oldTab = results[0];
+    console.log("Helloo", oldTab);
+    browser.tabs.create({cookieStoreId: oldTab.cookieStoreId, index: oldTab.index + 1}).then((newTab) => {
+      if (browser.tabs.group) {
+        if (oldTab.groupId !== -1) {
+          browser.tabs.group({ groupId: oldTab.groupId, tabIds: [newTab.id] });
+        }
+      }
+    })
   });
 }
 

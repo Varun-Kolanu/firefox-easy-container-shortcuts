@@ -1,11 +1,11 @@
 {
   "manifest_version": 2,
   "name": "Easy Container Shortcuts",
-  "version": "1.6.0",
+  "version": "1.6.2",
   "description": "Easy, opinionated, keyboard shortcuts for containers.",
   "applications": {
     "gecko": {
-      "id": "firefox.container-shortcuts@strategery.io"
+      "id": "firefox.container-shortcuts2@strategery.io"
     }
   },
   "icons": {
@@ -20,6 +20,12 @@
     "scripts": ["background.js"]
   },
   "commands": {
+    "ecs-new-tab-current-container-current-group": {
+      "suggested_key": {
+        "default": "Ctrl+Alt+G"
+      },
+      "description": "Open a new tab on the current container in same group"
+    },
     "ecs-new-tab-current-container": {
       "suggested_key": {
         "default": "Ctrl+Alt+T"
